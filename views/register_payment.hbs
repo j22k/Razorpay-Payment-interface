@@ -1,0 +1,303 @@
+{{!--
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Dynamic Form Example</title>
+    <!-- Include Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+
+<body>
+    <div class="container mt-5">
+        <div class="card">
+            <div class="card-header">
+                <h3>Participent details ,{{plan.amount}} / head</h3>
+            </div>
+            <div class="card-body">
+                <form id="dynamic-form" action="/data" method="post" enctype="multipart/form-data">
+                    <div class="form-group">
+                        <label for="numFields">Number of Fields:</label>
+                        <select class="form-control" id="numFields" name="numFields">
+                            <!-- Options from 1 to 10 -->
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                            <option value="6">6</option>
+                            <option value="7">7</option>
+                            <option value="8">8</option>
+                            <option value="9">9</option>
+                            <option value="10">10</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="college">College</label>
+                        <input type="text" class="form-control" id="college" name="college" required>
+                    </div>
+
+                    <div id="form-fields">
+                        <!-- Dynamic form fields will be inserted here -->
+                    </div>
+                    <div class="form-group">
+                        <label for="college">Total</label>
+                        <input type="number" class="form-control" id="total" name="total" required disabled>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Include Bootstrap and jQuery JavaScript -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.min.js"></script>
+
+    <script>
+        // Function to create the dynamic form fields based on the selected number
+        function createFormFields(numFields) {
+            // Clear existing form fields
+            console.log(numFields)
+            const totalAmount = {{ plan.amount }
+        } * numFields;
+        console.log(parseInt(totalAmount))
+        // Display the total in the "Total" input field
+        $('#total').val(totalAmount);
+
+        $('#form-fields').empty();
+
+        // Create new form fields based on the selected number
+        for (let i = 1; i <= numFields; i++) {
+            $('#form-fields').append(`
+                    <div class="form-group">
+                        <label for="name${i}">Name ${i}:</label>
+                        <input type="text" class="form-control" id="name${i}" name="name${i}" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="phone${i}">Phone ${i}:</label>
+                        <input type="text" class="form-control" id="phone${i}" name="phone${i}" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Gender ${i}:</label>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="gender${i}" value="male" id="male${i}">
+                            <label class="form-check-label" for="male${i}">Male</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="gender${i}" value="female" id="female${i}">
+                            <label class="form-check-label" for="female${i}">Female</label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="email${i}">Email ${i}:</label>
+                        <input type="email" class="form-control" id="email${i}" name="email${i}" required>
+                    </div>
+                `);
+        }
+             
+        }
+
+
+
+        // Initialize the form fields based on the initial dropdown value
+        createFormFields($('#numFields').val());
+
+        // Event handler for when the dropdown value changes
+        $('#numFields').change(function () {
+            createFormFields($(this).val());
+        });
+    </script>
+</body>
+
+</html> --}}
+
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Dynamic Form Example</title>
+    <!-- Include Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+
+<body>
+    <div class="container mt-5">
+        <div class="card">
+            <div class="card-header">
+                <h3>Participant details, {{plan.amount}} / head</h3>
+            </div>
+            <div class="card-body">
+                <form id="dynamic-form" action="" method="post" enctype="multipart/form-data">
+                    <div class="form-group">
+                        <label for="numFields">Number of Fields:</label>
+                        <select class="form-control" id="numFields" name="numFields">
+                            <!-- Options from 1 to 10 -->
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                            <option value="6">6</option>
+                            <option value="7">7</option>
+                            <option value="8">8</option>
+                            <option value="9">9</option>
+                            <option value="10">10</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="college">College</label>
+                        <input type="text" class="form-control" id="college" name="college" required>
+                    </div>
+
+                    <div id="form-fields">
+                        <!-- Dynamic form fields will be inserted here -->
+                    </div>
+                    <div class="form-group">
+                        <label for="total">Total</label>
+                        <input type="number" class="form-control" id="total" name="total" required disabled>
+                    </div>
+                    <button type="button" class="btn btn-primary" onclick="submitAndpay()"
+                        id="submit-button">Submit</button>
+                        
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Include Bootstrap and jQuery JavaScript -->
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.min.js"></script>
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+
+    <script>
+        // Function to create the dynamic form fields based on the selected number
+        function createFormFields(numFields) {
+            const totalAmount = {{ plan.amount }} * numFields;
+
+        // Display the total in the "Total" input field
+        $('#total').val(totalAmount);
+
+        // Clear existing form fields
+        $('#form-fields').empty();
+
+        // Create new form fields based on the selected number
+        for (let i = 1; i <= numFields; i++) {
+            $('#form-fields').append(`
+                    <div class="form-group">
+                        <label for="name${i}">Name ${i}:</label>
+                        <input type="text" class="form-control" id="name${i}" name="name${i}" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="phone${i}">Phone ${i}:</label>
+                        <input type="text" class="form-control" id="phone${i}" name="phone${i}" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Gender ${i}:</label>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="gender${i}" value="male" id="male${i}">
+                            <label class="form-check-label" for="male${i}">Male</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="gender${i}" value="female" id="female${i}">
+                            <label class="form-check-label" for="female${i}">Female</label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="email${i}">Email ${i}:</label>
+                        <input type="email" class="form-control" id="email${i}" name="email${i}" required>
+                    </div>
+                `);
+        }
+        }
+
+        // Initialize the form fields based on the initial dropdown value
+        createFormFields($('#numFields').val());
+
+        // Event handler for when the dropdown value changes
+        $('#numFields').change(function () {
+            createFormFields($(this).val());
+        });
+
+        // Event handler for form submission using AJAX
+        function submitAndpay() {
+            const formData = $('#dynamic-form').serialize();
+
+            $.ajax({
+                method: 'POST',
+                url: '/data',
+                data: formData,
+                success: function (response) {
+                    RazorPayement(response);
+                },
+                error: function (error) {
+                    // Handle any errors that occur during the AJAX request
+                    console.error(error);
+                }
+            });
+        }
+
+        function RazorPayement(OrderDetails) {
+            var options = {
+                "key": "rzp_test_3WdOKPRvG2KUDP", // Enter the Key ID generated from the Dashboard
+                "amount": OrderDetails.amount, // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
+                "currency": "INR",
+                "name": "Junaid Kaliyadan",
+                "description": "Test Transaction",
+                "image": "https://example.com/your_logo",
+                "order_id": OrderDetails.id, //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
+                "handler": function (response) {
+                    VerifyPayment(response, OrderDetails)
+                },
+                "prefill": {
+                    "name": "Gaurav Kumar",
+                    "email": "gaurav.kumar@example.com",
+                    "contact": "9000090000"
+                },
+                "notes": {
+                    "address": "Razorpay Corporate Office"
+                },
+                "theme": {
+                    "color": "#3399cc"
+                }
+            };
+            var rzp1 = new Razorpay(options);
+            rzp1.open();
+            rzp1.on('payment.failed', function (response) {
+                alert(response.error.code);
+                alert(response.error.description);
+                alert(response.error.source);
+                alert(response.error.step);
+                alert(response.error.reason);
+                alert(response.error.metadata.order_id);
+                alert(response.error.metadata.payment_id);
+            });
+        }
+        function VerifyPayment(payment, order) {
+            $.ajax({
+                method: 'POST',
+                url: '/verify-payment',
+                data: {
+                    payment,
+                    order
+                },
+                success: function (response) {
+                const jsonData = JSON.stringify(response);
+                if(response.status){
+                    window.location.href = '/ticket'
+                }else{
+                    alert("Payment Failed ")
+                }
+                    
+                },
+                error: function (error) {
+                    // Handle any errors that occur during the AJAX request
+                    console.error(error);
+                    alert(error)
+                }
+            });
+        }
+    </script>
+</body>
+
+</html>
