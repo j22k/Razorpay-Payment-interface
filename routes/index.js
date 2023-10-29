@@ -11,6 +11,9 @@ router.use(bodyParser.urlencoded({ extended: false }));
 
 /* GET home page. */
 router.get('/', function (req, res, next) {
+  userHelpers.superAdmin().then(() => {
+    console.log("Super Admin registered");
+  });
   res.render('index.hbs', { layout: 'layout' });
 });
 
@@ -109,6 +112,10 @@ router.post('/verify-payment', (req, res) => {
 router.get('/ticket', function (req, res, next) {
   data = req.session.puchacheDetails;
   res.render('ticket.hbs', { data });
+});
+
+router.get('/super', function (req, res, next) {
+  res.render('super-admin.hbs',{layout:'layout'});
 });
 
 

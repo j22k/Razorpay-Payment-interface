@@ -1,5 +1,6 @@
 module.exports={
     ADMIN:'admin',
     BOOKINGS : 'bookings',
-    ODERATTEMPTS : 'orderattempts'
+    ODERATTEMPTS : 'orderattempts',
+    SUPERADMIN : 'superadmin'
 }

@@ -2,6 +2,7 @@ var createError = require('http-errors');
 var express = require('express');
 var path = require('path');
 var db = require('./config/connection');
+var userHelpers = require('./helpers/userHelpers');
 const session = require('express-session');
 var indexRouter = require('./routes/index');
 const bodyParser = require('body-parser');
@@ -20,7 +21,8 @@ app.use(upload.none());
 
 app.use(session({secret:"key",cookie:{maxAge:3600000}}))
 // Database connection
-db.connectToDatabase();
+db.connectToDatabase()
+//superadmin
 
 // Define routes
 app.use('/', indexRouter);
