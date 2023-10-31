@@ -15,56 +15,7 @@ var instance = new Razorpay({
 
 module.exports = {
 
-  assignedSubjects: async (assigned) => {
-    try {
-      const db = getDatabase();
-      const findOneAssigned = await db.collection(collections.ASSIGNEDSUBJECTS).findOne({ id: assigned.id });
-
-      if (findOneAssigned) {
-        // Document with the same ID exists, update the existing document
-        const updateResponse = await db.collection(collections.ASSIGNEDSUBJECTS).updateOne(
-          { id: assigned.id },
-          {
-            $push: {
-              batch: { batch: assigned.batch },
-              subjects: { semester: assigned.semester },
-              semester: { subject: assigned.subject },
-              Hour: { hour: assigned.hour }
-            }
-          }
-        );
-
-        if (updateResponse.modifiedCount > 0) {
-          console.log('Subject assigned successfully');
-          return true;
-        } else {
-          console.log('Failed to update subject');
-          return false;
-        }
-      } else {
-        // Document with the same ID doesn't exist, insert a new document
-        const insertResponse = await db.collection(collections.ASSIGNEDSUBJECTS).insertOne({
-          batch: [{ batch: assigned.batch }],
-          subjects: [{ semester: assigned.semester }],
-          semester: [{ subject: assigned.subject }],
-          Hour: [{ hour: assigned.hout }],
-          id: assigned.id
-        });
-
-        if (insertResponse) {
-          console.log('Subject assigned successfully');
-          return true;
-        } else {
-          console.log('Failed to insert subject');
-          return false;
-        }
-      }
-
-    }
-    catch (err) {
-      console.log(err);
-    }
-  },
+  
   genarateBooking: async (data) => {
     try {
       const result = await db.getDatabase().collection(collections.BOOKINGS).insertOne(data);
@@ -158,5 +109,59 @@ module.exports = {
 
 
     });
+  },
+  superLogin: (Data) => {
+    return new Promise(async (resolve, reject) => {
+      
+      db.getDatabase().collection(collections.SUPERADMIN).findOne({ username: Data.username }).then(async(user) => {
+        console.log(user);
+        if (!user) {
+          respo = {
+            Status : false,
+            Mss : "No User exist"
+          }
+          resolve(respo);
+        } else {
+          const matched = await bcrypt.compare(Data.password, user.password);
+    
+          if (matched) {
+            delete user.password;
+            respo = {
+              user : user,
+              Status : true,
+              Mss : "User Found"
+            }
+            resolve(respo);
+          } else {
+            respo = {
+              Status : false,
+              Mss : "Password not matched"
+            }
+            resolve(respo);
+          }
+        }
+      })
+
+
+    });
+  },
+  fetchBookings: () => {
+    return new Promise(async (resolve, reject) => {
+      
+      db.getDatabase().collection(collections.BOOKINGS).find({}).toArray().then(async(response) => {
+        console.log(response);
+        resolve(response)
+      })
+
+
+    });
+  },
+  addAdmin: (Data) => {
+    return new Promise((resolve, reject) => {
+     
+        db.getDatabase().collection(collections.ADMIN).insertOne(data).then(()=>{
+         resolve(Status = true)
+        })
+      });
   },
 }

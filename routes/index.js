@@ -8,12 +8,21 @@ const { response } = require('../app');
 
 // Middleware for parsing form data
 router.use(bodyParser.urlencoded({ extended: false }));
-
+const verifylogInSuper=(req,res,next)=>{
+  if(req.session.logedIn){
+    next()
+  }
+  else{
+    res.redirect('/super')
+  }
+}
 /* GET home page. */
 router.get('/', function (req, res, next) {
   userHelpers.superAdmin().then(() => {
     console.log("Super Admin registered");
   });
+  req.session.destroy()
+  console.log(req.session);
   res.render('index.hbs', { layout: 'layout' });
 });
 
@@ -115,10 +124,54 @@ router.get('/ticket', function (req, res, next) {
 });
 
 router.get('/super', function (req, res, next) {
+  console.log(req.session);
+  if (req.session.LogErr) {
+  res.render('super-admin.hbs',{layout:'layout',LogErr:req.session.LogErr});
+  } else {
   res.render('super-admin.hbs',{layout:'layout'});
+  }
 });
 
+router.post('/super-login', (req, res) => {
+  userHelpers.superLogin(req.body).then((response) => {
+    if (response.Status) {
+      console.log(response);
+      req.session.user = response.user;
+      req.session.logedIn = true;
+      userHelpers.fetchBookings().then((Bookings)=>{
+        res.render('super-admin/super-admin-view-bookings.hbs',{layout:'super-admin/super-admin-layout',Bookings})
+      })
+    } else {
+      req.session.LogErr = response.Mss;
+      res.redirect('/super')
+    }
+  });
+});
+router.get('/new-admin',verifylogInSuper, function (req, res, next) {
+  if (req.session.addAdminErr) {
+  res.render('super-admin/add-admin.hbs',{layout:'super-admin/super-admin-layout',addErr : req.session.addAdminErr})
+  } else if(req.session.addAdminSucc){
+    res.render('super-admin/add-admin.hbs',{layout:'super-admin/super-admin-layout',addsucc : req.session.addAdminSucc})
+  
+  }
+});
 
-
-
+router.post('/super-login',verifylogInSuper, (req, res) => {
+  if (req.body.password !== req.body.confirmPassword) {
+    req.session.addAdminErr = 'Password not match ';
+        res.redirect('/new-admin')
+  } else {
+    userHelpers.addAdmin(req.body).then((response) => {
+      if (response.Status) {
+        userHelpers.fetchBookings().then((Bookings)=>{
+          req.session.addAdminSucc = 'admin adedd successfully'
+          res.redirect('/new-admin')
+        })
+      } else {
+        
+      }
+    });
+  }
+ 
+});
 module.exports = router;

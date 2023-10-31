@@ -1,0 +1,55 @@
+<link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.css" />
+  
+<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.js"></script>
+
+        <table id="bookingTable" class="table table-striped table-dark">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">College</th>
+                    <th scope="col">Participents</th>
+                    <th scope="col">Date</th>
+                    <th scope="col">Amount</th>
+                    <th scope="col">Status</th>
+                    <th scope="col">Register</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{#each Bookings}}
+                <tr>
+                    <th scope="row">{{@index}}</th>
+                    <td>{{this.College}}</td>
+                    <td>
+                        <ul>
+                            {{#each participents}}
+                            <li>{{name}}</li>
+                            {{/each}}
+                        </ul>
+                    </td>
+                    <td>{{date}}</td>
+                    <td>{{TotalAmount}}</td>
+                    <td>
+                        {{#if status}}
+                        <button type="button" class="btn btn-success">Success</button>
+                        {{else}}
+                        <button type="button" class="btn btn-danger">Faild</button>
+                        {{/if}}
+                    </td>
+                    <td>
+                        {{#if status}}
+                        <button type="button" class="btn btn-info">Register</button>
+                        {{else}}
+                        <button type="button" class="btn btn-warning">Not allowed</button>
+                        {{/if}}
+                    </td>
+                </tr>
+                {{/each}}
+            </tbody>
+        </table>
+
+
+<script>
+  $(document).ready( function () {
+    $('#bookingTable').DataTable();
+} );
+</script>
