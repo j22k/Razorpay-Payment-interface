@@ -159,9 +159,21 @@ module.exports = {
   addAdmin: (Data) => {
     return new Promise((resolve, reject) => {
      
-        db.getDatabase().collection(collections.ADMIN).insertOne(data).then(()=>{
-         resolve(Status = true)
+        db.getDatabase().collection(collections.ADMIN).insertOne(Data).then((response)=>{
+          console.log(response);
+         resolve()
         })
       });
+  },
+  fetchAdmins: () => {
+    return new Promise(async (resolve, reject) => {
+      
+      db.getDatabase().collection(collections.ADMIN).find({}).toArray().then(async(response) => {
+        console.log(response);
+        resolve(response)
+      })
+
+
+    });
   },
 }

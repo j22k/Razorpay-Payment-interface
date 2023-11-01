@@ -8,6 +8,12 @@ const { response } = require('../app');
 
 // Middleware for parsing form data
 router.use(bodyParser.urlencoded({ extended: false }));
+
+router.get('/logout', (req, res) => {
+  req.session.destroy()
+  res.redirect('/')
+})
+
 const verifylogInSuper=(req,res,next)=>{
   if(req.session.logedIn){
     next()
@@ -148,30 +154,24 @@ router.post('/super-login', (req, res) => {
   });
 });
 router.get('/new-admin',verifylogInSuper, function (req, res, next) {
-  if (req.session.addAdminErr) {
-  res.render('super-admin/add-admin.hbs',{layout:'super-admin/super-admin-layout',addErr : req.session.addAdminErr})
-  } else if(req.session.addAdminSucc){
-    res.render('super-admin/add-admin.hbs',{layout:'super-admin/super-admin-layout',addsucc : req.session.addAdminSucc})
-  
-  }
+    res.render('super-admin/add-admin.hbs',{layout:'super-admin/super-admin-layout'})
 });
 
-router.post('/super-login',verifylogInSuper, (req, res) => {
+router.post('/add-admin',verifylogInSuper, (req, res) => {
   if (req.body.password !== req.body.confirmPassword) {
-    req.session.addAdminErr = 'Password not match ';
-        res.redirect('/new-admin')
+    res.json(Status = false)
   } else {
     userHelpers.addAdmin(req.body).then((response) => {
-      if (response.Status) {
-        userHelpers.fetchBookings().then((Bookings)=>{
-          req.session.addAdminSucc = 'admin adedd successfully'
-          res.redirect('/new-admin')
-        })
-      } else {
-        
-      }
+      res.json(Status = true)
     });
   }
  
 });
+
+router.get('/view',verifylogInSuper, function (req, res, next) {
+  userHelpers.fetchAdmins().then((response)=>{
+    res.render('super-admin/view-admins.hbs',{layout:'super-admin/super-admin-layout',admins : response})
+  })
+});
+
 module.exports = router;
