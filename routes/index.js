@@ -174,4 +174,28 @@ router.get('/view',verifylogInSuper, function (req, res, next) {
   })
 });
 
+router.get('/admin', function (req, res, next) {
+  console.log(req.session);
+  if (req.session.LogErr) {
+  res.render('admin.hbs',{layout:'layout',LogErr:req.session.LogErr});
+  } else {
+  res.render('admin.hbs',{layout:'layout'});
+  }
+});
+
+router.post('/admin-login', (req, res) => {
+  userHelpers.adminLogin(req.body).then((response) => {
+    if (response.Status) {
+      console.log(response);
+      req.session.user = response.user;
+      req.session.logedIn = true;
+      userHelpers.fetchBookings().then((Bookings)=>{
+        res.render('admin/admin-view-bookings.hbs',{layout:'admin/admin-layout',Bookings})
+      })
+    } else {
+      req.session.LogErr = response.Mss;
+      res.redirect('/super')
+    }
+  });
+});
 module.exports = router;

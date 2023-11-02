@@ -157,8 +157,12 @@ module.exports = {
     });
   },
   addAdmin: (Data) => {
-    return new Promise((resolve, reject) => {
-     
+    return new Promise(async(resolve, reject) => {
+      const salt = await bcrypt.genSalt(10)
+      const hashpass = await bcrypt.hash(Data.password, salt)
+      Data.password = hashpass
+      delete Data.confirmPassword;
+      console.log(Data);
         db.getDatabase().collection(collections.ADMIN).insertOne(Data).then((response)=>{
           console.log(response);
          resolve()
@@ -171,6 +175,41 @@ module.exports = {
       db.getDatabase().collection(collections.ADMIN).find({}).toArray().then(async(response) => {
         console.log(response);
         resolve(response)
+      })
+
+
+    });
+  },
+  adminLogin: (Data) => {
+    return new Promise(async (resolve, reject) => {
+      
+      db.getDatabase().collection(collections.ADMIN).findOne({ username: Data.username }).then(async(user) => {
+        console.log(user);
+        if (!user) {
+          respo = {
+            Status : false,
+            Mss : "No User exist"
+          }
+          resolve(respo);
+        } else {
+          const matched = await bcrypt.compare(Data.password, user.password);
+    
+          if (matched) {
+            delete user.password;
+            respo = {
+              user : user,
+              Status : true,
+              Mss : "User Found"
+            }
+            resolve(respo);
+          } else {
+            respo = {
+              Status : false,
+              Mss : "Password not matched"
+            }
+            resolve(respo);
+          }
+        }
       })
 
 

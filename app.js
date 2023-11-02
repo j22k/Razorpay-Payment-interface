@@ -23,7 +23,6 @@ app.use(session({secret:"key",cookie:{maxAge:3600000}}))
 // Database connection
 db.connectToDatabase()
 //superadmin
-
 // Define routes
 app.use('/', indexRouter);
 // Define other routes using app.use, e.g., app.use('/admin', adminRouter);

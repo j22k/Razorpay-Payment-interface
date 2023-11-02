@@ -47,11 +47,13 @@
                 url: '/add-admin',
                 data: formData,
                 success: function (response) {
-                 if( response.Status){
+                 if( response){
                   alert('New admin registered successfully')
+                  window.location.href = '/new-admin'
                  }
                  else{
                   alert('Failed to register new admin, Wrong password')
+                  window.location.href = '/new-admin'
                  }
                 },
                 error: function (error) {
