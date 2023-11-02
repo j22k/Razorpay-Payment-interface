@@ -26,8 +26,6 @@
         "type": "git",
           "url": "git+https://github.com/j22k/Razorpay-Payment-interface.git"
       },
-      "author": "",
-      "license": "ISC",
       "bugs": {
           "url": "https://github.com/j22k/Razorpay-Payment-interface/issues"
       },
