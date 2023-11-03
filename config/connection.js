@@ -1,6 +1,6 @@
 const { MongoClient } = require('mongodb');
 
-const uri = process.env.PORT || 'mongodb://localhost:27017';
+const uri = process.env.MONGO_PORT || 'mongodb://localhost:27017';
 const dbName = 'Payment-tickets';
 
 let client = null;
