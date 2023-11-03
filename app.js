@@ -44,6 +44,7 @@
 // module.exports = app;
 
 // app.js
+var http = require('http');
 var createError = require('http-errors');
 var express = require('express');
 var path = require('path');
@@ -52,6 +53,7 @@ const session = require('express-session');
 var indexRouter = require('./routes/index');
 const bodyParser = require('body-parser');
 const Handlebars = require('handlebars');
+var db = require('./config/connection');
 var app = express();
 const multer = require('multer');
 const upload = multer(); // Initialize multer
@@ -63,7 +65,7 @@ app.use(bodyParser.json());
 app.use(upload.none());
 
 app.use(session({ secret: "key", cookie: { maxAge: 3600000 } }));
-
+db.connectToDatabase()
 // Define routes
 app.use('/', indexRouter);
 // Define other routes using app.use, e.g., app.use('/admin', adminRouter);
