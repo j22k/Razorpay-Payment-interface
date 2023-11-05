@@ -19,25 +19,30 @@ app.set('view engine', 'hbs');
 app.use(bodyParser.json())
 app.use(upload.none());
 
-app.use(session({secret:"key",cookie:{maxAge:3600000}}))
+app.use(session({ secret: "key", cookie: { maxAge: 3600000 } }))
 
 // Database connection
 
 
 const port = process.env.PORT || 3000;
-app.listen(port, () => {
-  console.log(`Server is running on port ${port}`);
-});
+
 
 app.use(async (req, res, next) => {
   try {
-    await db.getDatabase();
-    next();
+    await db.getDatabase().then(() => {
+      app.listen(PORT, () => {
+        console.log("listening for requests");
+        next();
+      })
+    })
+
   } catch (error) {
     console.error(error);
     res.status(500).send('Database connection error');
   }
 });
+
+
 
 //superadmin
 // Define routes
