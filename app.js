@@ -23,7 +23,7 @@ app.use(session({secret:"key",cookie:{maxAge:3600000}}))
 db.connectToDatabase()
 //superadmin
 // Define routes
-router.get('/', function (req, res, next) {
+app.get('/', function (req, res, next) {
   userHelpers.superAdmin().then(() => {
     console.log("Super Admin registered");
   });
