@@ -63,17 +63,20 @@ router.get('/premium', function (req, res, next) {
 
 router.post('/data', (req, res) => {
   console.log('test 1');
+  console.log(req.body);
   const numFields = req.body.numFields;
   var total;
   const formData = [];
 
   for (let i = 1; i <= numFields; i++) {
+    console.log('loop :',i);
     const name = req.body[`name${i}`];
     const phone = req.body[`phone${i}`];
     const gender = req.body[`gender${i}`];
     const email = req.body[`email${i}`];
     formData.push({ name, phone, gender, email });
   }
+  console.log('Form data : ',formData);
   if (req.session.plan.name === 'basic') {
     total = numFields * req.session.plan.amount;
   } else if (req.session.plan.name === 'pro') {
@@ -89,10 +92,14 @@ router.post('/data', (req, res) => {
     participents: formData
   }
   console.log('Data :',data);
-
+  
   userHelpers.genarateBooking(data).then((orderDetails) => {
     if (orderDetails) {
+      console.log('test 3');
+      console.log(orderDetails);
       userHelpers.genarateRazorpay(orderDetails).then((response)=>{
+        console.log(response);
+        console.log('test 4');
         res.json(response)
       })
     } else {
