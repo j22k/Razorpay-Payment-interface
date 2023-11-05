@@ -4,7 +4,7 @@ const uri = process.env.MONGO_PORT || 'mongodb://localhost:27017';
 const dbName = 'Payment-tickets';
 
 let client = null;
-
+let db = null;
 async function connectToDatabase() {
 
   try {
@@ -14,14 +14,17 @@ async function connectToDatabase() {
     console.log(err);
     throw new Error('Unable to connect to the database');
   }
+  if (!db) {
+    db = client.db(dbName);
+  }
 }
 
 function getDatabase() {
-  if (!client || !client.isConnected()) {
+  if (!db) {
     throw new Error('Database connection is not established');
   }
 
-  return client.db(dbName);
+  return db;
 }
 
 module.exports = {
