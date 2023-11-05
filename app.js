@@ -23,9 +23,6 @@ app.use(session({secret:"key",cookie:{maxAge:3600000}}))
 
 
 http.createServer(function (req, res) {
-  console.log(`Just got a request at ${req.url}!`)
-  res.write('Yo!');
-  res.end();
 }).listen(process.env.PORT || 3000);
 
 
