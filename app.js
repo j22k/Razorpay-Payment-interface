@@ -25,14 +25,6 @@ app.use(session({ secret: "key", cookie: { maxAge: 3600000 } }))
 
 
 const PORT = process.env.PORT || 3000;
-
-const express = require('express');
-const app = express();
-const db = require('./config/connection'); // Import your database connection module
-
-// Your other middleware and configuration here
-
-// Define a custom middleware to establish the database connection
 app.use(async (req, res, next) => {
   try {
     await db.connectToDatabase(); // Call the function to connect to the database
