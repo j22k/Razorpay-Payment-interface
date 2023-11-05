@@ -11,7 +11,7 @@ const Handlebars = require('handlebars');
 var app = express();
 const multer = require('multer');
 const upload = multer(); // Initialize multer
-
+const mongoose = require('mongoose')
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
