@@ -25,7 +25,7 @@ app.use(session({secret:"key",cookie:{maxAge:3600000}}))
 // http.createServer(function (req, res) {
 // }).listen(process.env.PORT || 3000);
 
-var port = normalizePort(process.env.PORT || '3000');
+var port = '3000';
 app.set('port', port);
 
 /**
