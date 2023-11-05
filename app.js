@@ -24,15 +24,13 @@ app.use(session({ secret: "key", cookie: { maxAge: 3600000 } }))
 // Database connection
 
 
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 4000;
 app.use(async (req, res, next) => {
   try {
     await db.connectToDatabase(); // Call the function to connect to the database
     console.log('Connected successfully to the database');
-    app.listen(PORT, () => {
-      console.log('Listening for requests on port ' + PORT);
-      next(); // Continue to the next middleware
-    });
+    next(); // Continue to the next middleware
+  
   } catch (error) {
     console.error(error);
     res.status(500).send('Database connection error');
@@ -41,7 +39,9 @@ app.use(async (req, res, next) => {
 
 
 
-
+app.listen(PORT, () => {
+  console.log('Server is listening on port ' + PORT);
+});
 
 //superadmin
 // Define routes
