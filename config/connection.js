@@ -6,9 +6,6 @@ const dbName = 'Payment-tickets';
 let client = null;
 
 async function connectToDatabase() {
-  if (client && client.isConnected()) {
-    return; // Database connection is already established
-  }
 
   try {
     client = await MongoClient.connect(uri, { useNewUrlParser: true });
