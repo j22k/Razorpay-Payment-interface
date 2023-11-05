@@ -62,7 +62,7 @@ router.get('/premium', function (req, res, next) {
 });
 
 router.post('/data', (req, res) => {
-  // Access form data using req.body
+  console.log('test 1');
   const numFields = req.body.numFields;
   var total;
   const formData = [];
