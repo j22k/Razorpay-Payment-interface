@@ -77,6 +77,7 @@ router.post('/data', (req, res) => {
     formData.push({ name, phone, gender, email });
   }
   console.log('Form data : ',formData);
+  console.log(req.session);
   if (req.session.plan.name === 'basic') {
     total = numFields * req.session.plan.amount;
   } else if (req.session.plan.name === 'pro') {
