@@ -1,4 +1,5 @@
 var createError = require('http-errors');
+var http = require('http');
 var express = require('express');
 var path = require('path');
 var db = require('./config/connection');
@@ -19,6 +20,15 @@ app.use(bodyParser.json())
 app.use(upload.none());
 
 app.use(session({secret:"key",cookie:{maxAge:3600000}}))
+
+
+http.createServer(function (req, res) {
+  console.log(`Just got a request at ${req.url}!`)
+  res.write('Yo!');
+  res.end();
+}).listen(process.env.PORT || 3000);
+
+
 // Database connection
 db.connectToDatabase()
 //superadmin
