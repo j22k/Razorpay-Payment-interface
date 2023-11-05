@@ -222,13 +222,14 @@
         // Event handler for form submission using AJAX
         function submitAndpay() {
             const formData = $('#dynamic-form').serialize();
-
+            console.log('test1:',formData)
             $.ajax({
                 method: 'POST',
                 url: '/data',
                 data: formData,
                 success: function (response) {
                     RazorPayement(response);
+                    console.log('test 2',response)
                 },
                 error: function (error) {
                     // Handle any errors that occur during the AJAX request
