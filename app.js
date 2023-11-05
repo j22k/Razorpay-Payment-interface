@@ -12,7 +12,6 @@ const multer = require('multer');
 const upload = multer(); // Initialize multer
 
 
-
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
