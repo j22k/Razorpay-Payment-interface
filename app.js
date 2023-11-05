@@ -19,7 +19,13 @@ app.set('view engine', 'hbs');
 app.use(bodyParser.json())
 app.use(upload.none());
 
-app.use(session({ secret: "key",resave : false, cookie: { maxAge: 3600000 } }))
+app.use(session({
+   secret: "key",
+   resave : true,
+   saveUninitialized: true,
+   cookie: { maxAge: 3600000 }
+   })
+)
 
 // Database connection
 
