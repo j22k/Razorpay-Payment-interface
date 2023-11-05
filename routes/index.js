@@ -38,7 +38,6 @@ router.get('/basic', function (req, res, next) {
     name: 'basic', // Plan name
     amount: 100,   // Plan amount
   };
-  req.session.regenerate();
   console.log('full session : ',req.session);
   console.log('Basic plan log',req.session.plan);
   res.render('register_payment.hbs', { layout: 'layout', plan: req.session.plan });
@@ -50,7 +49,7 @@ router.get('/pro', function (req, res, next) {
     name: 'pro', // Plan name
     amount: 300,   // Plan amount
   };
-  req.session.regenerate();
+
   res.render('register_payment.hbs', { layout: 'layout', plan: req.session.plan });
 });
 
@@ -60,7 +59,6 @@ router.get('/premium', function (req, res, next) {
     name: 'premium', // Plan name
     amount: 500,   // Plan amount
   };
-  req.session.regenerate();
   res.render('register_payment.hbs', { layout: 'layout', plan: req.session.plan });
 });
 
@@ -82,6 +80,7 @@ router.post('/data', (req, res) => {
   console.log('Form data : ',formData);
   console.log(req.session);
   if (!req.session.plan) {
+    // The session plan does not exist, so return an error
     return res.status(400).json({ error: 'Session plan does not exist' });
   }
   if (req.session.plan.name === 'basic') {
@@ -167,11 +166,11 @@ router.post('/super-login', (req, res) => {
     }
   });
 });
-router.get('/new-admin',verifylogInSuper, function (req, res, next) {
+router.get('/new-admin', function (req, res, next) {
     res.render('super-admin/add-admin.hbs',{layout:'super-admin/super-admin-layout'})
 });
 
-router.post('/add-admin',verifylogInSuper, (req, res) => {
+router.post('/add-admin', (req, res) => {
   if (req.body.password !== req.body.confirmPassword) {
     res.json(Status = false)
   } else {
@@ -182,7 +181,7 @@ router.post('/add-admin',verifylogInSuper, (req, res) => {
  
 });
 
-router.get('/view',verifylogInSuper, function (req, res, next) {
+router.get('/view', function (req, res, next) {
   userHelpers.fetchAdmins().then((response)=>{
     res.render('super-admin/view-admins.hbs',{layout:'super-admin/super-admin-layout',admins : response})
   })
