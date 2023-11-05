@@ -39,12 +39,6 @@ app.use(async (req, res, next) => {
   }
 });
 
-// Your route handlers and other middleware go here
-
-
-app.listen(PORT, () => {
-  console.log('Server is listening on port ' + PORT);
-});
 
 
 
