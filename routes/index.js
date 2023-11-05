@@ -38,7 +38,8 @@ router.get('/basic', function (req, res, next) {
     name: 'basic', // Plan name
     amount: 100,   // Plan amount
   };
-
+  console.log('full session : ',req.session);
+  console.log('Basic plan log',req.session.plan);
   res.render('register_payment.hbs', { layout: 'layout', plan: req.session.plan });
 });
 
