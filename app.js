@@ -28,8 +28,10 @@ const PORT = process.env.PORT || 3000;
 
 app.use(async (req, res, next) => {
   try {
-    await db.getDatabase().then(() => {
-      app.listen(PORT, () => {
+    await db.getDatabase().then((response) => {
+      console.log('test 1 : ',response);
+      app.listen(PORT, (responsea) => {
+        console.log('test 1 : ',responsea);
         console.log("listening for requests");
         next();
       })
