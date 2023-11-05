@@ -22,23 +22,11 @@ app.use(upload.none());
 app.use(session({secret:"key",cookie:{maxAge:3600000}}))
 
 
-// http.createServer(function (req, res) {
-// }).listen(process.env.PORT || 3000);
+const port = process.env.PORT || 3000;
+app.listen(port, () => {
+  console.log(`Server is running on port ${port}`);
+});
 
-var port = '3000';
-app.set('port', port);
-
-/**
- * Create HTTP server.
- */
-
-var server = http.createServer(app);
-
-/**
- * Listen on provided port, on all network interfaces.
- */
-
-server.listen(port);
 
 // Database connection
 db.connectToDatabase()
