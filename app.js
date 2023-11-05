@@ -21,6 +21,8 @@ app.use(upload.none());
 
 app.use(session({secret:"key",cookie:{maxAge:3600000}}))
 
+// Database connection
+db.connectToDatabase()
 
 const port = process.env.PORT || 3000;
 app.listen(port, () => {
