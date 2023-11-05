@@ -28,8 +28,6 @@ app.listen(port, () => {
 });
 
 
-// Database connection
-db.connectToDatabase()
 //superadmin
 // Define routes
 app.get('/', function (req, res, next) {
