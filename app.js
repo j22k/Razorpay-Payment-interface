@@ -11,7 +11,7 @@ const Handlebars = require('handlebars');
 var app = express();
 const multer = require('multer');
 const upload = multer(); // Initialize multer
-const mongoose = require('mongoose')
+
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -24,45 +24,23 @@ app.use(session({ secret: "key", cookie: { maxAge: 3600000 } }))
 // Database connection
 
 
-// const port = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3000;
 
-// app.use(async (req, res, next) => {
-//   try {
-//     await db.getDatabase().then(() => {
-//       app.listen(PORT, () => {
-//         console.log("listening for requests");
-//         next();
-//       })
-//     })
-
-//   } catch (error) {
-//     console.error(error);
-//     res.status(500).send('Database connection error');
-//   }
-// });
-const PORT = process.env.PORT || 3000
-
-const connectDB = async () => {
+app.use(async (req, res, next) => {
   try {
-    const conn = await mongoose.connect(process.env.MONGO_URI);
-    console.log(`MongoDB Connected: ${conn.connection.host}`);
-  } catch (error) {
-    console.log(error);
-    process.exit(1);
-  }
-}
-
-//Routes go here
-app.all('*', (req,res) => {
-    res.json({"every thing":"is awesome"})
-})
-
-//Connect to the database before listening
-connectDB().then(() => {
-    app.listen(PORT, () => {
+    await db.getDatabase().then(() => {
+      app.listen(PORT, () => {
         console.log("listening for requests");
+        next();
+      })
     })
-})
+
+  } catch (error) {
+    console.error(error);
+    res.status(500).send('Database connection error');
+  }
+});
+
 
 
 //superadmin
