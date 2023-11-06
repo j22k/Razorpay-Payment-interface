@@ -79,10 +79,10 @@ router.post('/data', (req, res) => {
   }
   console.log('Form data : ',formData);
   console.log(req.session);
-  if (!req.session.plan) {
+//  if (!req.session.plan) {
     // The session plan does not exist, so return an error
-    return res.status(400).json({ error: 'Session plan does not exist' });
-  }
+//    return res.status(400).json({ error: 'Session plan does not exist' });
+//  }
   //if (req.session.plan.name === 'basic') {
    // total = numFields * req.session.plan.amount;
 //  } else if (req.session.plan.name === 'pro') {
