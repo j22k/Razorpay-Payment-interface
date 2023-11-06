@@ -68,7 +68,7 @@ router.post('/data', (req, res) => {
   const numFields = req.body.numFields;
   var total;
   const formData = [];
-  total = numFields * req.body. amount;
+  total = req.body.amount;
   for (let i = 1; i <= numFields; i++) {
     console.log('loop :',i);
     const name = req.body[`name${i}`];
