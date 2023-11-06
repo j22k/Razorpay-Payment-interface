@@ -68,7 +68,7 @@ router.post('/data', (req, res) => {
   const numFields = req.body.numFields;
   var total;
   const formData = [];
-
+  total = numFields * req.body. amount;
   for (let i = 1; i <= numFields; i++) {
     console.log('loop :',i);
     const name = req.body[`name${i}`];
@@ -83,13 +83,13 @@ router.post('/data', (req, res) => {
     // The session plan does not exist, so return an error
     return res.status(400).json({ error: 'Session plan does not exist' });
   }
-  if (req.session.plan.name === 'basic') {
-    total = numFields * req.session.plan.amount;
-  } else if (req.session.plan.name === 'pro') {
-    total = numFields * req.session.plan.amount;
-  } else {
-    total = numFields * req.session.plan.amount;
-  }
+  //if (req.session.plan.name === 'basic') {
+   // total = numFields * req.session.plan.amount;
+//  } else if (req.session.plan.name === 'pro') {
+//    total = numFields * req.session.plan.amount;
+//  } else {
+//    total = numFields * req.session.plan.amount;
+//  }
   let data = {
     College: req.body.college,
     TotalAmount: total,
