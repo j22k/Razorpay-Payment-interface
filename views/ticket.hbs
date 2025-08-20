@@ -1,0 +1,46 @@
+<div class="card">
+    <div class="card-header">
+        Table Example
+    </div>
+     <div class="card-body">
+                <p><strong>ID:</strong> {{data._id}}</p>
+            <p><strong>College:</strong> {{data.College}}</p>
+            <p><strong>Date:</strong> {{data.date}}</p>
+    </div>
+    <div class="card-body">
+        <table class="table table-dark">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Phone</th>
+                    <th scope="col">Gender</th>
+                    <th scope="col">Email</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{#each data.participents}}
+                <tr>
+                    <th scope="row">{{@index}}</th>
+                    <td>{{this.name}}</td>
+                    <td>{{this.phone}}</td>
+                    <td>{{this.gender}}</td>
+                    <td>{{this.email}}</td>
+                </tr>
+                {{/each}}
+            </tbody>
+        </table>
+        <p><strong>Total Amount::</strong> {{data.TotalAmount}}</p>
+        <button id="print-button" class="btn btn-primary">Print</button>
+
+    </div>
+</div>
+<script>
+    // Function to handle the "Print" button click event
+    function printPage() {
+        window.print(); // Open the browser's print dialog
+    }
+
+    // Attach the click event to the "Print" button
+    document.getElementById('print-button').addEventListener('click', printPage);
+</script>
