@@ -8,8 +8,8 @@ const { ObjectId } = require('mongodb');
 const bcrypt = require('bcrypt')
 
 var instance = new Razorpay({
-  key_id: 'rzp_test_3WdOKPRvG2KUDP',
-  key_secret: 'XGL7vG64Eap3kV2pRm7TGmul',
+  key_id: 'rzp_test_API',
+  key_secret: "secret_key",
 });
 
 
@@ -215,4 +215,5 @@ module.exports = {
 
     });
   },
+
 }
